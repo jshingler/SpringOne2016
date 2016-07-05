@@ -1,0 +1,100 @@
+---
+applications:
+- name: uaa
+  memory: 1024M
+  instances: 1
+  random-route: true
+  path: ./build/libs/uaa.war
+  host: jsuaa
+  env:
+    SPRING_PROFILES_ACTIVE: mysql,default
+    UAA_URL: http://jsuaa.cfapps.io
+    JBP_CONFIG_SPRING_AUTO_RECONFIGURATION: '{enabled: false}'
+    LOGIN_URL: http://jsuaa.cfapps.io
+    UAA_CONFIG_YAML: |
+      uaa:
+        test:
+          username: marissa
+          password: dr0WssaPH@ck
+      database:
+        driverClassName: org.mariadb.jdbc.Driver
+        url: jdbc:mysql://<DB_HOST>/<DATABASE>?user=<DB_USERNAME>&password=<DB_PASSWORD>
+        username: <DB_USERNAME>
+        password: <DB_PASSWORD>
+      smtp:
+        host: smtp.sendgrid.net
+        port: 2525
+        user: <SENDGRID_USERNAME>
+        password: <SENDGRID_PASSWORD>
+      oauth:
+        client:
+          autoapprove:
+            - resource-service
+            - user-dashboard
+        clients:
+          resource-service:
+            id: resource-service
+            secret: resource-secret
+            scope: uaa.resource
+            authorities: uaa.resource
+          user-dashboard:
+            id: user-dashboard
+            secret: user-dashboard-secret
+            scope: openid,myApp.read-resource,myApp.create-resource
+            authorized-grant-types: authorization_code,refresh_token,password
+            authorities: openid
+        user:
+          authorities:
+            - openid
+            - scim.me
+            - cloud_controller.read
+            - cloud_controller.write
+            - cloud_controller_service_permissions.read
+            - password.write
+            - scim.userids
+            - uaa.user
+            - approvals.me
+            - oauth.approvals
+            - profile
+            - roles
+            - user_attributes
+            - myApp.read-reservations
+            - myApp.create-reservations
+
+      scim:
+        groups:
+          zones.read: Read identity zones
+          zones.write: Create and update identity zones
+          idps.read: Retrieve identity providers
+          idps.write: Create and update identity providers
+          clients.admin: Create, modify and delete OAuth clients
+          clients.write: Create and modify OAuth clients
+          clients.read: Read information about OAuth clients
+          clients.secret: Change the password of an OAuth client
+          scim.write: Create, modify and delete SCIM entities, i.e. users and groups
+          scim.read: Read all SCIM entities, i.e. users and groups
+          scim.create: Create users
+          scim.userids: Read user IDs and retrieve users by ID
+          scim.zones: Control a user's ability to manage a zone
+          scim.invite: Send invitations to users
+          password.write: Change your password
+          oauth.approval: Manage approved scopes
+          oauth.login: Authenticate users outside of the UAA
+          openid: Access profile information, i.e. email, first and last name, and phone number
+          groups.update: Update group information and memberships
+          uaa.user: Act as a user in the UAA
+          uaa.resource: Serve resources protected by the UAA
+          uaa.admin: Act as an administrator throughout the UAA
+          uaa.none: Forbid acting as a user
+          myApp.read-reservations: Read Resources
+          myApp.create-reservations: Create Resources
+        group_membership:
+          - acme|acme.dev,acme.qa
+          - acme.dev|marissa
+          - uaa.admin|marissa
+        external_groups:
+          - acme|   cn=Engineering,ou=groups,dc=example,dc=com cn=HR,ou=groups,dc=example,dc=com   cn=mgmt,ou=groups,dc=example,dc=com
+          - acme.dev|cn=Engineering,ou=groups,dc=example,dc=com
+        users:
+          - marissa|koala|marissa@test.org|Marissa|Bloggs|uaa.user,uaa.admin,myApp.read-reservations,myApp.create-reservations
+        userids_enabled: true
