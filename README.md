@@ -7,4 +7,4 @@
 1. Setup Required Services
   1. ClearDB MySql
   2. SendGrid
-1. Deploy UAA
+1. Deploy [UAA](https://github.com/jshingler/SpringOne2016/tree/master/uaa)
