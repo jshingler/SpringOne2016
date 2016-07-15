@@ -1,0 +1,16 @@
+server:
+  port: 8081
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+
+security:
+  basic:
+    enabled: false
+  oauth2:
+    resource:
+      id: health
+#        jwt.keyUri: http://jsuaa.cfapps.io/token_key
+      userInfoUri: http://jsuaa.cfapps.io/userinfo
+      preferTokenInfo: true

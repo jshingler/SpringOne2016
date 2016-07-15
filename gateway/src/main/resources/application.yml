@@ -1,0 +1,40 @@
+server.port: 8086
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+
+security:
+  basic:
+    enabled: false
+  oauth2:
+    resource:
+      userInfoUri: http://jsuaa.cfapps.io/userinfo
+      # token_key
+    # Not a real client
+    # JWT with UAA not so well with other IDP
+    # Test Token Relay with out
+    client:
+      clientId: apigateway
+
+# This allows the Authorization Headers to
+# flow to the downstream services
+zuul.sensitiveHeaders: Cookie,Set-Cookie
+zuul:
+  routes:
+#    uaa:
+#      path: /uaa/**
+#      url: ${targets.uaa}/
+    hello: /api/hello/**
+#    hello:
+#      path: /api/hello/**
+#      url: http://localhost:8080/hello
+    sayhello: /api/sayhello/**
+
+
+---
+
+spring:
+  profiles: cloud 
+
+targets.scheme: http
