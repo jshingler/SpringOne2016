@@ -16,3 +16,6 @@ From uaa directory
 
 ## UAA Resources
 * [UAA API Documentation](https://docs.cloudfoundry.org/api/uaa/)
+* 
+
+* [Securing Microservices with Spring Cloud Security - Will Tran](https://www.youtube.com/watch?v=USMl2GNg2r0)
