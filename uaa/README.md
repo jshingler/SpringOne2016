@@ -18,6 +18,6 @@ or manually from [here](http://repo.spring.io/release/org/cloudfoundry/identity/
 
 ## UAA Resources
 * [UAA API Documentation](https://docs.cloudfoundry.org/api/uaa/)
-* 
+* [UAA Sysadmin Guide](https://github.com/cloudfoundry/uaa/blob/master/docs/Sysadmin-Guide.rst)
 
 * [Securing Microservices with Spring Cloud Security - Will Tran](https://www.youtube.com/watch?v=USMl2GNg2r0)

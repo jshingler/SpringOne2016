@@ -19,6 +19,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,27 +39,6 @@ public class SayhelloApplication {
     public static void main(String[] args) {
         SpringApplication.run(SayhelloApplication.class, args);
     }
-
-
-    @Bean
-    public ResourceServerConfigurer resourceServer(SecurityProperties securityProperties) {
-        return new ResourceServerConfigurerAdapter() {
-            @Override
-            public void configure(ResourceServerSecurityConfigurer resources) {
-                resources.resourceId("health");
-            }
-
-            @Override
-            public void configure(HttpSecurity http) throws Exception {
-                if (securityProperties.isRequireSsl()) {
-                    http.requiresChannel().anyRequest().requiresSecure();
-                }
-                http.authorizeRequests()
-                        .antMatchers("/**").access("#oauth2.hasScope('health.events')");
-            }
-        };
-    }
-
 }
 
 
@@ -78,7 +58,7 @@ class SayHelloController {
     @Autowired
     private OAuth2RestTemplate restTemplate;
 
-//    @PreAuthorize("#oauth2.hasScope('health.events')")
+    @PreAuthorize("#oauth2.hasScope('health.events')")
     @RequestMapping("/")
     public String sayHello(@RequestHeader(value="Authorization") String authorizationHeader,
                            Principal currentUser) throws JsonProcessingException {

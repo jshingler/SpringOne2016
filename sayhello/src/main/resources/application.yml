@@ -9,8 +9,16 @@ security:
   basic:
     enabled: false
   oauth2:
+    # If JWT Tokens are not setup in UAA
+    # Client ID / Secret allows JWT Token to be pulled
+    client:
+      client-id: resource-service
+      client-secret: resource-secret
+      authentication-scheme:
     resource:
+      # Adding Resource Id Causes JWT Aud to be checked
       id: health
-#        jwt.keyUri: http://jsuaa.cfapps.io/token_key
+      jwt:
+        key-uri: http://jsuaa.cfapps.io/token_key
       userInfoUri: http://jsuaa.cfapps.io/userinfo
       preferTokenInfo: true
