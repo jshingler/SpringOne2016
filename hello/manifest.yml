@@ -1,0 +1,11 @@
+---
+applications:
+- name: hello
+  memory: 1024M
+  instances: 1
+  random-route: true
+  path: ./build/libs/hello-0.0.1-SNAPSHOT.jar
+  host: jshello
+  services:
+  - my-service-registry
+  - my-config-service

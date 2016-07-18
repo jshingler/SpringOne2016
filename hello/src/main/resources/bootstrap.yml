@@ -3,4 +3,4 @@ spring:
     name: hello
   cloud:
     config:
-      uri: http://localhost:${config.port:8888}
+      uri: ${vcap.services.my-config-service.credentials.uri:http://localhost:8888}

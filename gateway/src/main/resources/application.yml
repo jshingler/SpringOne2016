@@ -31,10 +31,23 @@ zuul:
 #      url: http://localhost:8080/hello
     sayhello: /api/sayhello/**
 
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 10
+  client:
+    serviceUrl:
+      defaultZone: ${vcap.services.my-service-registry.credentials.uri:http://127.0.0.1:8761}/eureka/
 
 ---
 
 spring:
-  profiles: cloud 
+  profiles: cloud
+
+eureka:
+#  password: password
+  instance:
+    hostname: ${vcap.application.uris[0]}
+#    hostname: jsapigateway.cfapps.io
+    nonSecurePort: 80
 
 targets.scheme: http

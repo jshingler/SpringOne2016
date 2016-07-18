@@ -10,7 +10,9 @@ import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceS
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
+import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -42,6 +44,7 @@ public class SayhelloApplication {
 }
 
 
+@RibbonClient(name = "hello", configuration = HelloConfiguration.class)
 @RestController
 class SayHelloController {
 
@@ -56,6 +59,15 @@ class SayHelloController {
     private LoadBalancerClient loadBalancerClient;
 
     @Autowired
+    private DiscoveryClient discoveryClient;
+
+//    @LoadBalanced
+//    @Bean
+//    RestTemplate restTemplate(){
+//        return new RestTemplate();
+//    }
+
+    @Autowired
     private OAuth2RestTemplate restTemplate;
 
     @PreAuthorize("#oauth2.hasScope('health.events')")
@@ -64,26 +76,22 @@ class SayHelloController {
                            Principal currentUser) throws JsonProcessingException {
         String greeting = "";
 
+        System.out.println("1. ############################################ /sayhello UserInfoURI " + resourceServerProperties.getUserInfoUri());
         Map<?, ?> userInfoResponse = restTemplate.getForObject(resourceServerProperties.getUserInfoUri(),
                 Map.class);
-//        model.addAttribute("username", currentUser.getName());
-//        model.addAttribute("response",
-//                objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(userInfoResponse));
-//        model.addAttribute("token", restTemplate.getOAuth2ClientContext().getAccessToken().getValue());
 
-
-
-        System.out.println("############################################ /sayhello " + new Date());
-        System.out.println("############################################ /sayhello " + currentUser.toString());
-        System.out.println("############################################ /sayhello " + authorizationHeader);
+        System.out.println("############################################ /sayhello Date:         " + new Date());
+        System.out.println("############################################ /sayhello User:         " + currentUser.toString());
+        System.out.println("############################################ /sayhello Auth Header:  " + authorizationHeader);
         System.out.println("############################################ /sayhello " + objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(userInfoResponse));
-        System.out.println("############################################ /sayhello " + restTemplate.getOAuth2ClientContext().getAccessToken().getValue());
+//        System.out.println("############################################ /sayhello Access Token: " + restTemplate.getOAuth2ClientContext().getAccessToken().getValue());
 
         // http://www.todaysoftmag.com/article/1429/micro-service-discovery-using-netflix-eureka
         // hello is the name of the service in
         // Eureka, as well as of the Ribbon LoadBalancer
         // which gets created automatically.
-        ServiceInstance instance = loadBalancerClient.choose("hello");
+        ServiceInstance instance = loadBalancerClient.choose("HELLO");
+        System.out.println("############################################ /sayhello instance" + instance);
 
         if (instance != null) {
             // Invoke server, based on host and port.
@@ -92,7 +100,7 @@ class SayHelloController {
                     .format("http://%s:%s/hello/",
                             instance.getHost(), instance.getPort()));
 
-            System.out.println("############################################ Invoke Hello ");
+            System.out.println("############################################ Invoke Hello uri1: " + instance.getUri());
             greeting = restTemplate.getForObject(helloUri, String.class);
             System.out.println("############################################ Invoke Hello after ");
         }

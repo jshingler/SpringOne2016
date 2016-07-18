@@ -1,3 +1,5 @@
+hello.message: Message from manifest.yml
+
 security:
   basic:
     enabled: false
@@ -6,6 +8,22 @@ security:
         userInfoUri: http://jsuaa.cfapps.io/userinfo
       client:
             client-id: hello-app
-
             #        id: health.events
             #        jwt.keyUri:  http://jsuaa.cfapps.io/token_key
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${vcap.services.my-service-registry.credentials.uri:http://127.0.0.1:8761}/eureka/
+
+---
+
+spring:
+  profiles: cloud
+
+eureka:
+#  password: password
+  instance:
+    hostname: ${vcap.application.uris[0]}
+#    hostname: jshello.cfapps.io
+    nonSecurePort: 80

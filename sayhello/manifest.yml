@@ -1,0 +1,10 @@
+---
+applications:
+- name: sayhello
+  memory: 1024M
+  instances: 1
+  random-route: true
+  path: ./build/libs/sayhello-0.0.1-SNAPSHOT.jar
+  host: jssayhello
+  services:
+  - my-service-registry

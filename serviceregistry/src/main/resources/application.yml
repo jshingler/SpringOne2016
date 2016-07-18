@@ -1,0 +1,19 @@
+#
+# Based On: https://github.com/spring-cloud-samples/eureka/blob/master/src/main/resources/application.yml
+#
+
+server:
+  port: 8761
+
+eureka:
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+  server:
+    waitTimeInMsWhenSyncEmpty: 0
+
+
+
+logging.level:
+  com.netflix.eureka: OFF
+  com.netflix.discovery: OFF

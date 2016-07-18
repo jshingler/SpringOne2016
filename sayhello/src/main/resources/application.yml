@@ -10,11 +10,10 @@ security:
     enabled: false
   oauth2:
     # If JWT Tokens are not setup in UAA
-    # Client ID / Secret allows JWT Token to be pulled
+    # Client ID / Secret allows JWT to be pulled
     client:
       client-id: resource-service
       client-secret: resource-secret
-      authentication-scheme:
     resource:
       # Adding Resource Id Causes JWT Aud to be checked
       id: health
@@ -22,3 +21,20 @@ security:
         key-uri: http://jsuaa.cfapps.io/token_key
       userInfoUri: http://jsuaa.cfapps.io/userinfo
       preferTokenInfo: true
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${vcap.services.my-service-registry.credentials.uri:http://127.0.0.1:8761}/eureka/
+
+---
+
+spring:
+  profiles: cloud
+
+eureka:
+#  password: password
+  instance:
+    hostname: ${vcap.application.uris[0]}
+#    hostname: jssayhello.cfapps.io
+    nonSecurePort: 80
