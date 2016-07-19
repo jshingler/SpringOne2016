@@ -1,3 +1,7 @@
+spring:
+  application:
+    name: sayhello
+
 server:
   port: 8081
 
@@ -11,9 +15,9 @@ security:
   oauth2:
     # If JWT Tokens are not setup in UAA
     # Client ID / Secret allows JWT to be pulled
-    client:
-      client-id: resource-service
-      client-secret: resource-secret
+#    client:
+#      client-id: resource-service
+#      client-secret: resource-secret
     resource:
       # Adding Resource Id Causes JWT Aud to be checked
       id: health
@@ -26,6 +30,11 @@ eureka:
   client:
     serviceUrl:
       defaultZone: ${vcap.services.my-service-registry.credentials.uri:http://127.0.0.1:8761}/eureka/
+
+hello:
+  ribbon:
+    eureka:
+      enabled: true
 
 ---
 

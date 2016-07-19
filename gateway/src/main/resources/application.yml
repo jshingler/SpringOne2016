@@ -14,8 +14,8 @@ security:
     # Not a real client
     # JWT with UAA not so well with other IDP
     # Test Token Relay with out
-    client:
-      clientId: apigateway
+#    client:
+#      clientId: apigateway
 
 # This allows the Authorization Headers to
 # flow to the downstream services

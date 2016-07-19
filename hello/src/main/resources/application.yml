@@ -1,3 +1,11 @@
+spring:
+  application:
+    name: hello
+
+server:
+  port: 8080
+
+
 hello.message: Message from manifest.yml
 
 security:
@@ -5,9 +13,10 @@ security:
     enabled: false
   oauth2:
       resource:
-        userInfoUri: http://jsuaa.cfapps.io/userinfo
+#        userInfoUri: http://jsuaa.cfapps.io/userinfo
+        jwt.keyUri: http://jsuaa.cfapps.io/token_key
       client:
-            client-id: hello-app
+#            client-id: hello-app
             #        id: health.events
             #        jwt.keyUri:  http://jsuaa.cfapps.io/token_key
 
@@ -15,6 +24,7 @@ eureka:
   client:
     serviceUrl:
       defaultZone: ${vcap.services.my-service-registry.credentials.uri:http://127.0.0.1:8761}/eureka/
+
 
 ---
 
