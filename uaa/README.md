@@ -14,13 +14,13 @@ or manually from [here](http://repo.spring.io/release/org/cloudfoundry/identity/
 2. update manifest file with `<DB>` and `<SENDGRID>` Information
 3. [Add Tokens for JWT](https://github.com/cloudfoundry/uaa/blob/master/docs/Sysadmin-Guide.rst#token-signing)
 
-    #
+    ```#
     # Generating new asymmetric key pairs
     #
     mkdir temp_uaa_certs
     cd temp_uaa_certs
     openssl genrsa -out privkey.pem 2048
-    openssl rsa -pubout -in privkey.pem -out pubkey.pem
+    openssl rsa -pubout -in privkey.pem -out pubkey.pem```
 
 4. `cf login`
 5. `cf push`
