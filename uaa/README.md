@@ -13,6 +13,7 @@ From uaa directory
 or manually from [here](http://repo.spring.io/release/org/cloudfoundry/identity/cloudfoundry-identity-uaa/3.4.0/cloudfoundry-identity-uaa-3.4.0.war)
 1. update manifest file with `DB` and `SENDGRID` Information
 1. [Add Tokens for JWT](https://github.com/cloudfoundry/uaa/blob/master/docs/Sysadmin-Guide.rst#token-signing)
+
 ---
 
     #
