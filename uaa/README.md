@@ -20,7 +20,8 @@ or manually from [here](http://repo.spring.io/release/org/cloudfoundry/identity/
     mkdir temp_uaa_certs
     cd temp_uaa_certs
     openssl genrsa -out privkey.pem 2048
-    openssl rsa -pubout -in privkey.pem -out pubkey.pem```
+    openssl rsa -pubout -in privkey.pem -out pubkey.pem
+    ```
 
 4. `cf login`
 5. `cf push`
