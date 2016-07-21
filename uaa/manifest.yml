@@ -11,21 +11,21 @@ applications:
     UAA_URL: http://jsuaa.cfapps.io
     JBP_CONFIG_SPRING_AUTO_RECONFIGURATION: '{enabled: false}'
     LOGIN_URL: http://jsuaa.cfapps.io
-    UAA_CONFIG_YAML: |-
+    UAA_CONFIG_YAML: |
       uaa:
         test:
           username: marissa
           password: dr0WssaPH@ck
       database:
         driverClassName: org.mariadb.jdbc.Driver
-        url: jdbc:mysql://us-cdbr-iron-east-04.cleardb.net/ad_bbe74c5569e466c?user=b3190a25f75362&password=f2bcbccf
-        username: b3190a25f75362
-        password: f2bcbccf
+        url: jdbc:mysql://<DB_HOST>/<DATABASE>?user=<DB_USERNAME>&password=<DB_PASSWORD>
+        username: <DB_USERNAME>
+        password: <DB_PASSWORD>
       smtp:
         host: smtp.sendgrid.net
         port: 2525
-        user: SAmzwBOqrP
-        password: FZFOiZj0g9w07754
+        user: <SENDGRID_USERNAME>
+        password: <SENDGRID_PASSWORD>
       oauth:
         client:
           autoapprove:
@@ -89,6 +89,23 @@ applications:
           uaa.none: Forbid acting as a user
           myApp.read-reservations: Read Resources
           myApp.create-reservations: Create Resources
+        group_membership:
+          - acme|acme.dev,acme.qa
+          - acme.dev|marissa
+          - uaa.admin|marissa
+        external_groups:
+          - acme|   cn=Engineering,ou=groups,dc=example,dc=com cn=HR,ou=groups,dc=example,dc=com   cn=mgmt,ou=groups,dc=example,dc=com
+          - acme.dev|cn=Engineering,ou=groups,dc=example,dc=com
+        users:
+          - marissa|koala|marissa@test.org|Marissa|Bloggs|uaa.user,uaa.admin,myApp.read-reservations,myApp.create-reservations
+        userids_enabled: true
+      #
+      # Generating new asymmetric key pairs
+      #
+      # mkdir temp_uaa_certs
+      # cd temp_uaa_certs
+      # openssl genrsa -out privkey.pem 2048
+      # openssl rsa -pubout -in privkey.pem -out pubkey.pem
       jwt:
         token:
           signing-key: |
