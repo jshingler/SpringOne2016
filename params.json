@@ -1,0 +1,6 @@
+{
+  "name": "Springone2016",
+  "tagline": "SpringOne 2016 Presentation Code",
+  "body": "# SpringOne2016 Shingler - Personal Healthcare IOT\r\n\r\n##Setup\r\n\r\n1. Sign Up for PWS / PCF Account  https://account.run.pivotal.io/sign-up\r\n1. Login in to PWS https://run.pivotal.io\r\n1. Setup Required Services\r\n  1. ClearDB MySql NOTE: Must be Boost Plan or better\r\n  2. SendGrid\r\n1. Deploy [UAA](https://github.com/jshingler/SpringOne2016/tree/master/uaa)\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
