@@ -24,7 +24,7 @@ or manually from [here](http://repo.spring.io/release/org/cloudfoundry/identity/
     openssl rsa -pubout -in privkey.pem -out pubkey.pem
     ```
 
-4. `cf login`
+4. `cf login -a api.run.pivotal.io`
 5. `cf push`
 
 ## UAA Resources
